@@ -6,7 +6,7 @@ import jieba
 
 import numpy as np
 
-from util import load_word_re, load_type_re, load_word_pair, word_replace, map_item
+from util import load_word_re, load_type_re, load_pair, word_replace, map_item
 
 
 path_stop_word = 'dict/stop_word.txt'
@@ -17,8 +17,8 @@ path_syno = 'dict/synonym.csv'
 stop_word_re = load_word_re(path_stop_word)
 word_type_re = load_type_re(path_type_dir)
 jieba.load_userdict(path_cut_word)
-homo_dict = load_word_pair(path_homo)
-syno_dict = load_word_pair(path_syno)
+homo_dict = load_pair(path_homo)
+syno_dict = load_pair(path_syno)
 
 path_rank = 'feat/rank.json'
 path_freq = 'feat/freq.json'

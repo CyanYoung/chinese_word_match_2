@@ -12,6 +12,8 @@ rank_fit() 使用 textrank、freq_fit() 使用 tfidf，提取各类的关键词�
 
 通过 pos_set 限定词性、通过 not_key 过滤无效词
 
+将 textrank 源代码中 len(word) >= 2 修改为 1，保留单字
+
 #### 3.match
 
 predict() 去除停用词，统一替换地区、时间等特殊词，切分后

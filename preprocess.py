@@ -32,7 +32,6 @@ def prepare(path, path_dir):
         label_texts[label] = list()
         with open(os.path.join(path_dir, file), 'r') as f:
             for line in f:
-                print(line.strip())
                 text = re.sub(stop_word_re, '', line.strip())
                 for word_type, word_re in word_type_re.items():
                     text = re.sub(word_re, word_type, text)

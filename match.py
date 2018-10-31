@@ -31,7 +31,7 @@ feats = {'rank': rank_dict,
          'freq': freq_dict}
 
 
-def predict(text, name):
+def predict(text, name, cand):
     text = re.sub(stop_word_re, '', text.strip())
     for word_type, word_re in word_type_re.items():
         text = re.sub(word_re, word_type, text)
@@ -50,13 +50,18 @@ def predict(text, name):
             scores.append(sum(match_scores) / len(match_scores))
         else:
             scores.append(0.0)
-    if __name__ == '__main__':
-        print(scores)
-    return labels[int(np.argmax(scores))]
+    scores = np.array(scores)
+    max_scores = sorted(scores, reverse=True)[:cand]
+    max_inds = np.argsort(-scores)[:cand]
+    max_preds = [labels[ind] for ind in max_inds]
+    formats = list()
+    for pred, score in zip(max_preds, max_scores):
+        formats.append('{} {:.3f}'.format(pred, score))
+    return ', '.join(formats)
 
 
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        print('rank: %s' % predict(text, 'rank'))
-        print('freq: %s' % predict(text, 'freq'))
+        print('rank: %s' % predict(text, 'rank', cand=5))
+        print('freq: %s' % predict(text, 'freq', cand=5))

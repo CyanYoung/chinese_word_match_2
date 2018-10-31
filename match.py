@@ -51,8 +51,9 @@ def predict(text, name, cand):
         else:
             scores.append(0.0)
     scores = np.array(scores)
-    max_scores = sorted(scores, reverse=True)[:cand]
-    max_inds = np.argsort(-scores)[:cand]
+    bound = min(len(scores), cand)
+    max_scores = sorted(scores, reverse=True)[:bound]
+    max_inds = np.argsort(-scores)[:bound]
     max_preds = [labels[ind] for ind in max_inds]
     formats = list()
     for pred, score in zip(max_preds, max_scores):

@@ -31,7 +31,7 @@ feats = {'rank': rank_dict,
          'freq': freq_dict}
 
 
-def predict(text, name, cand):
+def predict(text, name, max_cand):
     text = re.sub(stop_word_re, '', text.strip())
     for word_type, word_re in word_type_re.items():
         text = re.sub(word_re, word_type, text)
@@ -51,7 +51,7 @@ def predict(text, name, cand):
         else:
             scores.append(0.0)
     scores = np.array(scores)
-    bound = min(len(scores), cand)
+    bound = min(len(scores), max_cand)
     max_scores = sorted(scores, reverse=True)[:bound]
     max_inds = np.argsort(-scores)[:bound]
     max_preds = [labels[ind] for ind in max_inds]
@@ -64,5 +64,5 @@ def predict(text, name, cand):
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        print('rank: %s' % predict(text, 'rank', cand=5))
-        print('freq: %s' % predict(text, 'freq', cand=5))
+        print('rank: %s' % predict(text, 'rank', max_cand=5))
+        print('freq: %s' % predict(text, 'freq', max_cand=5))

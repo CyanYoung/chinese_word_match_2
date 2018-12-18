@@ -12,8 +12,8 @@ from util import load_word_re, load_type_re, load_pair, word_replace, map_item
 path_stop_word = 'dict/stop_word.txt'
 path_type_dir = 'dict/word_type'
 path_cut_word = 'dict/cut_word.txt'
-path_homo = 'dict/homonym.csv'
-path_syno = 'dict/synonym.csv'
+path_homo = 'dict/homo.csv'
+path_syno = 'dict/syno.csv'
 stop_word_re = load_word_re(path_stop_word)
 word_type_re = load_type_re(path_type_dir)
 jieba.load_userdict(path_cut_word)

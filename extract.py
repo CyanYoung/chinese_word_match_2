@@ -14,9 +14,7 @@ from util import load_word, flat_read, make_dict
 min_freq = 1
 key_num = 10
 
-path_cut_word = 'dict/cut_word.txt'
 path_not_key = 'dict/not_key.txt'
-jieba.load_userdict(path_cut_word)
 not_keys = load_word(path_not_key)
 jieba.analyse.set_stop_words('dict/not_key.txt')
 

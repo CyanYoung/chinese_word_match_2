@@ -20,7 +20,7 @@ jieba.load_userdict(path_cut_word)
 
 
 def save(path, label_texts):
-    head = 'label,doc'
+    head = 'label,cut_doc'
     with open(path, 'w') as f:
         f.write(head + '\n')
         for label, texts in label_texts.items():

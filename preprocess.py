@@ -1,6 +1,7 @@
 import os
 
 import re
+import jieba
 
 from util import load_word_re, load_type_re, load_pair, word_replace
 
@@ -13,6 +14,9 @@ stop_word_re = load_word_re(path_stop_word)
 word_type_re = load_type_re(path_type_dir)
 homo_dict = load_pair(path_homo)
 syno_dict = load_pair(path_syno)
+
+path_cut_word = 'dict/cut_word.txt'
+jieba.load_userdict(path_cut_word)
 
 
 def save(path, label_texts):
@@ -40,7 +44,8 @@ def prepare(path, path_dir):
                 text = word_replace(text, syno_dict)
                 if text not in text_set:
                     text_set.add(text)
-                    label_texts[label].append(text)
+                    cut_text = ' '.join(jieba.cut(text))
+                    label_texts[label].append(cut_text)
     save(path, label_texts)
 
 

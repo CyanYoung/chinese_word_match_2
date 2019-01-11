@@ -18,8 +18,8 @@ path_not_key = 'dict/not_key.txt'
 not_keys = load_word(path_not_key)
 jieba.analyse.set_stop_words('dict/not_key.txt')
 
-path_rank = 'feat/rank.json'
 path_tfidf = 'model/tfidf.pkl'
+path_rank = 'feat/rank.json'
 path_freq = 'feat/freq.json'
 
 pos_set = ('a', 'ad', 'an', 'd', 'f', 'm', 'n', 'nr', 'ns', 'nt', 'nz',
@@ -33,10 +33,10 @@ def ind2word(word_inds):
     return ind_words
 
 
-def rank_fit(docs, labels, path):
+def rank_fit(cut_docs, labels, path):
     label_pairs = dict()
-    for doc, label in zip(docs, labels):
-        pairs = textrank(doc, topK=key_num, withWeight=True, allowPOS=pos_set)
+    for cut_doc, label in zip(cut_docs, labels):
+        pairs = textrank(cut_doc, topK=key_num, withWeight=True, allowPOS=pos_set)
         pairs = make_dict(pairs)
         label_pairs[label] = pairs
     with open(path, 'w') as f:
@@ -68,17 +68,9 @@ def freq_fit(cut_docs, labels, path_feat, path_model):
 
 
 def fit(path_train):
-    docs = flat_read(path_train, 'doc')
+    cut_docs = flat_read(path_train, 'cut_doc')
     labels = flat_read(path_train, 'label')
-    cut_docs = list()
-    for doc in docs:
-        texts = doc.split()
-        doc_words = list()
-        for text in texts:
-            text_words = list(jieba.cut(text))
-            doc_words.extend(text_words)
-        cut_docs.append(' '.join(doc_words))
-    rank_fit(docs, labels, path_rank)
+    rank_fit(cut_docs, labels, path_rank)
     freq_fit(cut_docs, labels, path_freq, path_tfidf)
 
 

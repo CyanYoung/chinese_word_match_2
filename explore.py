@@ -35,10 +35,9 @@ def plot_freq(items, freqs, field, u_bound):
 
 
 def statistic(path_train):
-    docs = flat_read(path_train, 'doc')
+    docs = flat_read(path_train, 'cut_doc')
     all_words = ' '.join(docs).split()
-    doc_words = [doc.split() for doc in docs]
-    doc_lens = [len(words) for words in doc_words]
+    doc_lens = [len(doc.split()) for doc in docs]
     count(path_vocab_freq, all_words, 'vocab')
     count(path_len_freq, doc_lens, 'doc_len')
 

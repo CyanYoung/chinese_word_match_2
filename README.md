@@ -10,9 +10,7 @@ prepare() 将按类文件保存的训练数据汇总、去重，去除停用词�
 
 rank_fit() 使用 textrank、freq_fit() 使用 tfidf，提取各类的关键词和权重
 
-通过 pos_set 限定词性、通过 not_key 过滤无效词
-
-将 textrank 源代码中 len(word) >= 2 修改为 1，保留单字
+通过 pos_set 限定词性、not_key 过滤无效词，修改 textrank 代码、保留单字
 
 #### 3.match
 

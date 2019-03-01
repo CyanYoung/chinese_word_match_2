@@ -1,7 +1,6 @@
 import json
 
 import re
-
 import jieba
 
 import numpy as np

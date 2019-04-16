@@ -1,23 +1,13 @@
 import json
 
-import re
 import jieba
 
 import numpy as np
 
-from util import load_word_re, load_type_re, load_pair, word_replace, map_item
+from preprocess import clean
 
+from util import map_item
 
-path_stop_word = 'dict/stop_word.txt'
-path_type_dir = 'dict/word_type'
-path_cut_word = 'dict/cut_word.txt'
-path_homo = 'dict/homo.csv'
-path_syno = 'dict/syno.csv'
-stop_word_re = load_word_re(path_stop_word)
-word_type_re = load_type_re(path_type_dir)
-jieba.load_userdict(path_cut_word)
-homo_dict = load_pair(path_homo)
-syno_dict = load_pair(path_syno)
 
 path_rank = 'feat/rank.json'
 path_freq = 'feat/freq.json'
@@ -31,11 +21,7 @@ feats = {'rank': rank_dict,
 
 
 def predict(text, name, cand):
-    text = re.sub(stop_word_re, '', text.strip())
-    for word_type, word_re in word_type_re.items():
-        text = re.sub(word_re, word_type, text)
-    text = word_replace(text, homo_dict)
-    text = word_replace(text, syno_dict)
+    text = clean(text)
     words = list(jieba.cut(text))
     label_pairs = map_item(name, feats)
     labels = list(label_pairs.keys())

@@ -27,6 +27,14 @@ def save(path, label_texts):
             f.write(label + ',' + ' '.join(texts) + '\n')
 
 
+def clean(text):
+    text = re.sub(stop_word_re, '', text)
+    for word_type, word_re in word_type_re.items():
+        text = re.sub(word_re, word_type, text)
+    text = word_replace(text, homo_dict)
+    return word_replace(text, syno_dict)
+
+
 def prepare(path, path_dir):
     label_texts = dict()
     files = os.listdir(path_dir)
@@ -37,11 +45,7 @@ def prepare(path, path_dir):
         with open(os.path.join(path_dir, file), 'r') as f:
             for line in f:
                 text = line.strip().lower()
-                text = re.sub(stop_word_re, '', text)
-                for word_type, word_re in word_type_re.items():
-                    text = re.sub(word_re, word_type, text)
-                text = word_replace(text, homo_dict)
-                text = word_replace(text, syno_dict)
+                text = clean(text)
                 if text not in text_set:
                     text_set.add(text)
                     cut_text = ' '.join(jieba.cut(text))

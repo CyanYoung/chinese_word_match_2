@@ -1,4 +1,4 @@
-## Chinese Keyword Match 2018-10
+## Chinese Word Match 2018-10
 
 #### 1.preprocess
 

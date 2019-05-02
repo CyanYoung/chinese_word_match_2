@@ -1,4 +1,4 @@
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score
 
 from match import predict
 
@@ -10,10 +10,10 @@ texts = flat_read(path_test, 'text')
 labels = flat_read(path_test, 'label')
 
 
-def test(name, texts, labels):
+def test(name, texts, labels, thre):
     preds = list()
     for text, label in zip(texts, labels):
-        pred = predict(text, name)
+        pred = predict(text, name, thre)
         preds.append(pred)
     f1 = f1_score(labels, preds, average='weighted')
     print('\n%s f1: %.2f - acc: %.2f\n' % (name, f1, accuracy_score(labels, preds)))
@@ -23,5 +23,5 @@ def test(name, texts, labels):
 
 
 if __name__ == '__main__':
-    test('edit', texts, labels)
-    test('cos', texts, labels)
+    test('edit', texts, labels, thre=0.5)
+    test('cos', texts, labels, thre=0.5)

@@ -23,21 +23,7 @@ feats = {'rank': rank_dict,
          'freq': freq_dict}
 
 
-def predict(text, name, cand, thre):
-    text = clean(text)
-    words = list(jieba.cut(text))
-    label_pairs = map_item(name, feats)
-    labels = list(label_pairs.keys())
-    scores = list()
-    for pairs in label_pairs.values():
-        match_scores = list()
-        for word in words:
-            if word in pairs:
-                match_scores.append(pairs[word])
-        if match_scores:
-            scores.append(sum(match_scores) / len(match_scores))
-        else:
-            scores.append(0.0)
+def sort(scores, labels, thre, cand):
     scores = np.array(scores)
     bound = min(len(scores), cand)
     max_scores = sorted(scores, reverse=True)[:bound]
@@ -54,8 +40,26 @@ def predict(text, name, cand, thre):
         return '其它'
 
 
+def predict(text, name, thre):
+    text = clean(text)
+    words = list(jieba.cut(text))
+    label_pairs = map_item(name, feats)
+    labels = list(label_pairs.keys())
+    scores = list()
+    for pairs in label_pairs.values():
+        match_scores = list()
+        for word in words:
+            if word in pairs:
+                match_scores.append(pairs[word])
+        if match_scores:
+            scores.append(sum(match_scores) / len(words))
+        else:
+            scores.append(0.0)
+    return sort(scores, labels, thre, cand=5)
+
+
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        print('rank: %s' % predict(text, 'rank', cand=5, thre=0.5))
-        print('freq: %s' % predict(text, 'freq', cand=5, thre=0.5))
+        print('rank: %s' % predict(text, 'rank', thre=0.5))
+        print('freq: %s' % predict(text, 'freq', thre=0.5))

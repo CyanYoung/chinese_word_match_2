@@ -52,7 +52,7 @@ def freq_fit(cut_docs, labels, path_feat, path_model):
     word_inds = model.vocabulary_
     ind_words = ind2word(word_inds)
     for vec, label in zip(vecs, labels):
-        bound = sum(vec > 0)
+        bound = sum(vec > 0.0)
         max_scores = sorted(vec, reverse=True)[:bound]
         max_inds = np.argsort(-vec)[:bound]
         keys = [ind_words[max_ind] for max_ind in max_inds]

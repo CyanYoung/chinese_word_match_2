@@ -23,5 +23,5 @@ def test(name, texts, labels, thre):
 
 
 if __name__ == '__main__':
-    test('edit', texts, labels, thre=0.5)
-    test('cos', texts, labels, thre=0.5)
+    test('rank', texts, labels, thre=0.2)
+    test('freq', texts, labels, thre=0.2)

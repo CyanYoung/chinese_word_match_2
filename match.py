@@ -61,5 +61,5 @@ def predict(text, name, thre):
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        print('rank: %s' % predict(text, 'rank', thre=0.5))
-        print('freq: %s' % predict(text, 'freq', thre=0.5))
+        print('rank: %s' % predict(text, 'rank', thre=0.1))
+        print('freq: %s' % predict(text, 'freq', thre=0.1))

@@ -14,6 +14,4 @@ rank_fit() 使用 textrank、freq_fit() 使用 tfidf，提取各类的关键词�
 
 #### 3.match
 
-predict() 去除停用词，统一替换地区、时间等特殊词，切分后
-
-分别通过 textrank、tfidf 与各类的关键词匹配、选取最大的平均权重
+predict() 实时交互，输入单句、清洗后进行预测，输出所有类别的得分

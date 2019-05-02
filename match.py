@@ -9,6 +9,9 @@ from preprocess import clean
 from util import map_item
 
 
+path_cut_word = 'dict/cut_word.txt'
+jieba.load_userdict(path_cut_word)
+
 path_rank = 'feat/rank.json'
 path_freq = 'feat/freq.json'
 with open(path_rank, 'r') as f:

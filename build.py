@@ -12,7 +12,6 @@ from util import load_word, flat_read, make_dict
 
 
 min_freq = 1
-key_num = 10
 
 path_not_key = 'dict/not_key.txt'
 not_keys = load_word(path_not_key)
@@ -36,7 +35,7 @@ def ind2word(word_inds):
 def rank_fit(cut_docs, labels, path):
     label_pairs = dict()
     for cut_doc, label in zip(cut_docs, labels):
-        pairs = textrank(cut_doc, topK=key_num, withWeight=True, allowPOS=pos_set)
+        pairs = textrank(cut_doc, topK=None, withWeight=True, allowPOS=pos_set)
         pairs = make_dict(pairs)
         label_pairs[label] = pairs
     with open(path, 'w') as f:
@@ -53,8 +52,9 @@ def freq_fit(cut_docs, labels, path_feat, path_model):
     word_inds = model.vocabulary_
     ind_words = ind2word(word_inds)
     for vec, label in zip(vecs, labels):
-        max_scores = np.array(sorted(vec, reverse=True)[:key_num])
-        max_inds = np.argsort(-vec)[:]
+        bound = sum(vec > 0)
+        max_scores = sorted(vec, reverse=True)[:bound]
+        max_inds = np.argsort(-vec)[:bound]
         keys = [ind_words[max_ind] for max_ind in max_inds]
         pairs = [(key, score) for key, score in zip(keys, max_scores)]
         pairs = make_dict(pairs)
